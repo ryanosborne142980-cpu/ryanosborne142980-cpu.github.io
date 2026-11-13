@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Ryan Osborne | Data Engineer</title>
+  <meta name="description" content="Data pipelines, warehouses, and the quality checks that make reported numbers trustworthy. The work of Ryan Osborne.">
+  <style>
+    :root {
+      --ink: #0b1b33;
+      --ink-soft: #46556b;
+      --muted: #7a8799;
+      --line: #dde3ec;
+      --surface: #ffffff;
+      --canvas: #f4f6fa;
+      --navy: #0b1b33;
+      --accent: #1d4ed8;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--canvas);
+      font-synthesis: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      margin: 0;
+      background: var(--canvas);
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      content: "";
+      background-image:
+        linear-gradient(to right, rgba(11, 27, 51, .045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(11, 27, 51, .045) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(180deg, #000, transparent 85%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: min(1120px, 100%);
+      min-height: 100vh;
+      min-height: 100svh;
+      margin: auto;
+      padding: 32px 48px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      font-size: 1.05rem;
+      font-weight: 650;
+      letter-spacing: -.02em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--navy);
+      color: #fff;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    .location {
+      color: var(--muted);
+      font-size: .8125rem;
+    }
+
+    main {
+      display: grid;
+      flex: 1;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+      align-items: center;
+      gap: clamp(48px, 8vw, 104px);
+      padding: 72px 0;
+    }
+
+    .intro { max-width: 520px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 24px;
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 650;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 28px;
+      height: 2px;
+      background: var(--accent);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 650;
+      letter-spacing: -.045em;
+      line-height: 1.06;
+    }
+
+    .accent { color: var(--accent); }
+
+    .lede {
+      max-width: 440px;
+      margin: 24px 0 0;
+      color: var(--ink-soft);
+      font-size: 1.1rem;
+      line-height: 1.65;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      padding: 13px 22px;
+      border: 1px solid var(--navy);
+      border-radius: 8px;
+      background: var(--navy);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 600;
+      transition: background .15s, border-color .15s;
+    }
+
+    .button:hover { background: var(--accent); border-color: var(--accent); }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--ink);
+      border-color: #b9c3d2;
+    }
+
+    .button.secondary:hover { background: var(--surface); border-color: var(--navy); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--navy);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: 0 1px 2px rgba(11, 27, 51, .04), 0 24px 48px -24px rgba(11, 27, 51, .18);
+    }
+
+    .card-head {
+      padding: 28px 32px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .card-label {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 650;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1.4rem;
+      font-weight: 650;
+      letter-spacing: -.03em;
+    }
+
+    .project {
+      display: block;
+      padding: 24px 32px;
+      transition: background .15s;
+    }
+
+    .project + .project { border-top: 1px solid var(--line); }
+    .project:last-child { border-radius: 0 0 11px 11px; }
+    .project:hover { background: var(--canvas); }
+
+    .project-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .project h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1.02rem;
+      font-weight: 650;
+      letter-spacing: -.01em;
+    }
+
+    .tag {
+      flex: none;
+      color: var(--accent);
+      font-size: .7rem;
+      font-weight: 650;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .tag.wip { color: var(--muted); }
+
+    .project p {
+      margin: 8px 0 0;
+      color: var(--ink-soft);
+      font-size: .92rem;
+      line-height: 1.6;
+    }
+
+    .stack {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .78rem;
+      letter-spacing: .02em;
+    }
+
+    footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 28px;
+      justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .8125rem;
+    }
+
+    footer nav { display: flex; gap: 24px; }
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 760px) {
+      .page { padding: 24px; }
+      main { grid-template-columns: 1fr; gap: 44px; padding: 48px 0; }
+      .eyebrow { margin-bottom: 18px; }
+      .lede { margin-top: 16px; }
+      .card-head, .project { padding-left: 24px; padding-right: 24px; }
+    }
+
+    @media (max-width: 360px) {
+      .page { padding: 20px; }
+      .card-head, .project { padding-left: 20px; padding-right: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">RO</span>
+        Ryan Osborne
+      </div>
+      <span class="location">Columbus, OH</span>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="welcome-heading">
+        <p class="eyebrow">Data engineering portfolio</p>
+        <h1 id="welcome-heading">Welcome to the work of <span class="accent">Ryan Osborne.</span></h1>
+        <p class="lede">Data pipelines, warehouses, and the quality checks that make reported numbers trustworthy. Eighteen years in data and IT, now in projects you can read, run, and review.</p>
+        <div class="actions">
+          <a class="button" href="#work">View the work</a>
+          <a class="button secondary" href="https://www.linkedin.com/in/ryan-osborne-20306014">LinkedIn</a>
+        </div>
+      </section>
+
+      <section class="card" id="work" aria-labelledby="work-heading">
+        <div class="card-head">
+          <p class="card-label">Selected projects</p>
+          <h2 id="work-heading">Recent work</h2>
+        </div>
+
+        <a class="project" href="https://github.com/ryanosborne142980-cpu/columbus_housing">
+          <div class="project-top">
+            <h3>Columbus Housing Pipeline</h3>
+            <span class="tag">Active</span>
+          </div>
+          <p>Weekly county home-sale reports turned into parcel-level data, verified against the county's own counts, with a 23-rule quality gate before anything lands.</p>
+          <div class="stack">Python / SQL Server / Databricks / GitHub Actions</div>
+        </a>
+
+        <a class="project" href="https://github.com/ryanosborne142980-cpu/nfl-injury-analyzer">
+          <div class="project-top">
+            <h3>NFL Injury Analyzer</h3>
+            <span class="tag wip">In progress</span>
+          </div>
+          <p>A dimensional warehouse of NFL player availability and injuries since 2010, built from nflverse data with every inferred value labeled as inferred.</p>
+          <div class="stack">Python / SQL Server / T-SQL</div>
+        </a>
+      </section>
+    </main>
+
+    <footer>
+      <span>Ryan Osborne, data engineer</span>
+      <nav>
+        <a href="https://github.com/ryanosborne142980-cpu">GitHub</a>
+        <a href="https://www.linkedin.com/in/ryan-osborne-20306014">LinkedIn</a>
+      </nav>
+    </footer>
+  </div>
+</body>
+</html>
