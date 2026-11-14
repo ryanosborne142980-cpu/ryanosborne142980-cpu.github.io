@@ -3,437 +3,164 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#060a12">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f7f8fa">
   <title>Ryan Osborne | Data Engineer</title>
-  <meta name="description" content="Data engineer. Pipelines, warehouses, and quality gates that check their own work. 18+ years across data engineering, governance, and business analysis.">
+  <meta name="description" content="Data engineer. I build pipelines and warehouses, then prove the numbers tie out. 18+ years across data engineering, governance, and business analysis.">
   <style>
     :root {
-      --bg: #060a12;
-      --panel: #0c1424;
-      --panel-2: #101a2e;
-      --line: #1c2a45;
-      --ink: #eef3fb;
-      --soft: #a6b4c9;
-      --mute: #6d7d96;
-      --accent: #5b9bff;
-      --ok: #5eead4;
+      --bg: #f7f8fa;
+      --paper: #ffffff;
+      --ink: #11151c;
+      --soft: #3d4655;
+      --mute: #66707f;
+      --rule: #d5dae2;
+      --rule-strong: #11151c;
+      --tick: #0a7c4f;
+      --tick-bg: #e6f4ed;
+      --hold: #8a5300;
+      --hold-bg: #fbf0dc;
+      --link: #1d4ed8;
       --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       color: var(--ink);
       background: var(--bg);
-      font-synthesis: none;
       -webkit-font-smoothing: antialiased;
       scroll-behavior: smooth;
-      scroll-padding-top: 84px;
+      scroll-padding-top: 72px;
     }
-
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); line-height: 1.6; }
-    a { color: inherit; text-decoration: none; }
-    ul, ol { margin: 0; padding: 0; list-style: none; }
-    h1, h2, h3, p { margin: 0; }
-
-    .wrap { width: min(1160px, 100%); margin: 0 auto; padding: 0 40px; }
+    body { margin: 0; line-height: 1.6; font-size: 17px; }
+    a { color: var(--link); text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    :focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 2px; }
+    h1, h2, h3, h4, p, ul, ol { margin: 0; padding: 0; }
+    ul, ol { list-style: none; }
+    .wrap { width: min(1040px, 100%); margin: 0 auto; padding: 0 32px; }
+    .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 
     /* nav */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      border-bottom: 1px solid var(--line);
-      background: rgba(6, 10, 18, .82);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-
-    .nav .wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-    }
-
-    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 650; letter-spacing: -.01em; }
-
-    .mark {
-      display: grid;
-      width: 32px;
-      height: 32px;
-      place-items: center;
-      border: 1px solid var(--accent);
-      border-radius: 7px;
-      color: var(--accent);
-      font: 700 .72rem var(--mono);
-    }
-
-    .links { display: flex; align-items: center; gap: 4px; }
-
-    .links a {
-      padding: 8px 14px;
-      border-radius: 6px;
-      color: var(--soft);
-      font-size: .88rem;
-      font-weight: 550;
-      transition: color .15s, background .15s;
-    }
-
-    .links a:hover { color: var(--ink); background: var(--panel); }
-    .links a[aria-current="true"] { color: var(--ink); background: var(--panel-2); }
-
-    .links a.cta {
-      margin-left: 8px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-    }
-
-    .links a.cta:hover { background: var(--accent); color: #04101f; }
+    .nav { position: sticky; top: 0; z-index: 10; background: rgba(247,248,250,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav .brand { font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -.01em; }
+    .nav .links { display: flex; gap: 28px; font-size: 15px; }
+    .nav .links a { color: var(--soft); text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; }
+    .nav .links a:hover { color: var(--ink); }
+    .nav .links a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--ink); }
 
     /* hero */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      border-bottom: 1px solid var(--line);
-      background:
-        radial-gradient(60rem 28rem at 78% -8%, rgba(91, 155, 255, .20), transparent 70%),
-        radial-gradient(40rem 24rem at 4% 110%, rgba(94, 234, 212, .08), transparent 70%),
-        var(--bg);
-    }
+    .hero { padding: 72px 0 64px; }
+    .hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: 64px; align-items: start; }
+    h1 { font-size: clamp(2.2rem, 4.6vw, 3.5rem); line-height: 1.06; letter-spacing: -.03em; font-weight: 750; max-width: 14ch; }
+    .lede { margin-top: 22px; color: var(--soft); max-width: 46ch; font-size: 1.08rem; }
+    .actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn { display: inline-block; padding: 11px 20px; border-radius: 6px; font-weight: 600; font-size: 15px; text-decoration: none; border: 1.5px solid var(--ink); background: var(--ink); color: #fff; cursor: pointer; font-family: inherit; }
+    .btn:hover { background: #2a3140; color: #fff; }
+    .btn.ghost { background: transparent; color: var(--ink); }
+    .btn.ghost:hover { background: var(--ink); color: #fff; }
 
-    .hero::before {
-      position: absolute;
-      inset: 0;
-      content: "";
-      background-image:
-        linear-gradient(to right, rgba(120, 160, 230, .07) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(120, 160, 230, .07) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: linear-gradient(180deg, #000 20%, transparent 95%);
-      -webkit-mask-image: linear-gradient(180deg, #000 20%, transparent 95%);
-    }
-
-    .hero .wrap {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
-      align-items: center;
-      gap: clamp(40px, 6vw, 88px);
-      padding-top: 96px;
-      padding-bottom: 96px;
-    }
-
-    .kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 28px;
-      color: var(--accent);
-      font: 600 .74rem var(--mono);
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-
-    .kicker::before { width: 28px; height: 2px; background: var(--accent); content: ""; }
-
-    h1 {
-      font-size: clamp(2.9rem, 6.6vw, 5.6rem);
-      font-weight: 750;
-      letter-spacing: -.05em;
-      line-height: 1;
-    }
-
-    h1 em { color: var(--accent); font-style: normal; }
-
-    .lede { max-width: 540px; margin-top: 28px; color: var(--soft); font-size: 1.14rem; line-height: 1.7; }
-    .lede strong { color: var(--ink); font-weight: 600; }
-
-    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 24px;
-      border: 1px solid var(--accent);
-      border-radius: 8px;
-      background: var(--accent);
-      color: #04101f;
-      font-size: .94rem;
-      font-weight: 650;
-      transition: transform .15s, background .15s, border-color .15s, color .15s;
-    }
-
-    .btn:hover { transform: translateY(-2px); background: #86b4ff; border-color: #86b4ff; }
-    .btn.ghost { background: transparent; color: var(--ink); border-color: #33466a; }
-    .btn.ghost:hover { background: var(--panel-2); border-color: var(--accent); }
-
-    /* run card */
-    .run {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: linear-gradient(180deg, var(--panel-2), var(--panel));
-      box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .8);
-      font-family: var(--mono);
-    }
-
-    .run-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--line);
-      color: var(--mute);
-      font-size: .76rem;
-    }
-
-    .run-bar b { color: var(--soft); font-weight: 600; }
-    .run ol { padding: 8px 20px 4px; counter-reset: step; }
-
-    .run li {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 11px 0;
-      border-bottom: 1px dashed var(--line);
-      color: var(--soft);
-      font-size: .84rem;
-      counter-increment: step;
-    }
-
-    .run li:last-child { border-bottom: 0; }
-
-    .run li::before {
-      flex: none;
-      width: 26px;
-      color: var(--accent);
-      content: "0" counter(step);
-      font-weight: 700;
-    }
-
-    .run li span { margin-left: auto; color: var(--ok); font-size: .72rem; letter-spacing: .08em; }
-
-    .run-foot {
-      padding: 14px 20px;
-      border-top: 1px solid var(--line);
-      color: var(--mute);
-      font-size: .74rem;
-      line-height: 1.5;
-    }
-
-    /* proof */
-    .proof { border-bottom: 1px solid var(--line); background: var(--panel); }
-
-    .proof ul { display: grid; grid-template-columns: repeat(4, 1fr); }
-
-    .proof li { padding: 36px 28px; border-left: 1px solid var(--line); }
-    .proof li:first-child { border-left: 0; padding-left: 0; }
-
-    .num {
-      display: block;
-      font: 700 clamp(2.2rem, 4vw, 3.2rem) var(--mono);
-      letter-spacing: -.04em;
-      line-height: 1;
-    }
-
-    .num small { color: var(--accent); font-size: .55em; letter-spacing: 0; }
-    .cap { display: block; margin-top: 10px; color: var(--soft); font-size: .88rem; line-height: 1.45; }
-    .stamp { padding: 0 0 22px; color: var(--mute); font: .72rem var(--mono); }
+    /* tie-out sheet */
+    .sheet { background: var(--paper); border: 1px solid var(--rule); border-top: 3px solid var(--ink); border-radius: 2px; box-shadow: 0 1px 0 var(--rule); }
+    .sheet-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 14px 20px 12px; border-bottom: 1px solid var(--rule); }
+    .sheet-head h2 { font-size: 15px; font-weight: 700; }
+    .sheet-head p { font-size: 13px; color: var(--mute); }
+    .sheet ol { counter-reset: s; }
+    .sheet .step { display: grid; grid-template-columns: 22px 1fr auto; gap: 12px; align-items: baseline; padding: 11px 20px; border-bottom: 1px solid var(--rule); font-size: 15px; color: var(--mute); transition: color .2s; }
+    .sheet .mark { width: 18px; height: 18px; border: 1.5px solid var(--rule); border-radius: 50%; position: relative; top: 3px; transition: all .2s; }
+    .sheet .step .res { font-family: var(--mono); font-size: 13px; opacity: 0; transition: opacity .2s; }
+    .sheet .step.done { color: var(--ink); }
+    .sheet .step.done .mark { background: var(--tick); border-color: var(--tick); }
+    .sheet .step.done .mark::after { content: ""; position: absolute; left: 5px; top: 1px; width: 4px; height: 9px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+    .sheet .step.done .res { opacity: 1; color: var(--tick); }
+    .tie { padding: 16px 20px 6px; }
+    .tie dl { margin: 0; }
+    .tie .row { display: flex; justify-content: space-between; gap: 16px; padding: 7px 0; font-size: 15px; border-bottom: 1px dotted var(--rule); }
+    .tie dt { color: var(--soft); }
+    .tie dd { margin: 0; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    .tie .total { border-top: 2px solid var(--ink); border-bottom: 0; margin-top: 8px; padding-top: 10px; font-weight: 700; }
+    .tie .total dd { color: var(--mute); transition: color .2s, background .2s; padding: 0 8px; margin-right: -8px; border-radius: 3px; }
+    .sheet.ran .tie .total dd { color: var(--tick); background: var(--tick-bg); }
+    .sheet-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 20px 16px; font-size: 13px; color: var(--mute); }
+    .rerun { font: inherit; font-size: 13px; font-weight: 600; background: none; border: 1.5px solid var(--rule); border-radius: 5px; padding: 5px 12px; color: var(--ink); cursor: pointer; }
+    .rerun:hover { border-color: var(--ink); }
 
     /* sections */
-    section.block { padding: 104px 0; border-bottom: 1px solid var(--line); }
+    section.block { padding: 72px 0; border-top: 1px solid var(--rule); }
+    .sec-head { margin-bottom: 36px; display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; }
+    h2.t { font-size: clamp(1.6rem, 3vw, 2.1rem); letter-spacing: -.02em; line-height: 1.15; max-width: 22ch; }
+    .sec-head p { color: var(--soft); margin-top: 10px; max-width: 52ch; }
+    .tool { font: inherit; font-size: 14px; font-weight: 600; background: none; border: 1.5px solid var(--ink); border-radius: 6px; padding: 7px 14px; color: var(--ink); cursor: pointer; }
+    .tool:hover { background: var(--ink); color: #fff; }
 
-    .head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 48px; }
-
-    .eyebrow { margin-bottom: 14px; color: var(--accent); font: 600 .74rem var(--mono); letter-spacing: .14em; text-transform: uppercase; }
-
-    h2 { font-size: clamp(2rem, 4vw, 3.1rem); font-weight: 720; letter-spacing: -.04em; line-height: 1.05; }
-
-    .tool {
-      padding: 10px 16px;
-      border: 1px solid #33466a;
-      border-radius: 8px;
-      background: transparent;
-      color: var(--soft);
-      font: 600 .8rem var(--mono);
-      cursor: pointer;
-      transition: border-color .15s, color .15s;
-    }
-
-    .tool:hover { border-color: var(--accent); color: var(--ink); }
-
-    /* projects */
-    .project {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--panel);
-      transition: border-color .2s;
-    }
-
-    .project + .project { margin-top: 20px; }
-    .project[open] { border-color: #2c4170; }
-
-    .project summary {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
-      gap: 12px 24px;
-      padding: 28px 32px;
-      list-style: none;
-      cursor: pointer;
-    }
-
+    /* projects: ruled rows */
+    .project { border-top: 2px solid var(--ink); }
+    .project:last-of-type { border-bottom: 1px solid var(--rule); }
+    .project + .project { margin-top: 0; border-top: 1px solid var(--rule); }
+    .project summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) 28px; gap: 20px; padding: 24px 0; }
     .project summary::-webkit-details-marker { display: none; }
-    .project summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 14px; }
+    .ptitle { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .ptitle h3 { font-size: 1.35rem; letter-spacing: -.015em; }
+    .status { font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 99px; }
+    .status.active { color: var(--tick); background: var(--tick-bg); }
+    .status.paused { color: var(--hold); background: var(--hold-bg); }
+    .psub { margin-top: 8px; color: var(--soft); max-width: 64ch; }
+    .chev { align-self: start; margin-top: 6px; width: 12px; height: 12px; border: solid var(--ink); border-width: 0 2px 2px 0; transform: rotate(45deg); transition: transform .25s; justify-self: center; }
+    .project[open] .chev { transform: rotate(225deg); }
+    .project summary:hover h3 { text-decoration: underline; text-underline-offset: 4px; }
+    .pbody { padding: 0 0 32px; }
+    .flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--rule); background: var(--paper); }
+    .flow li { padding: 14px 14px 16px; border-right: 1px solid var(--rule); font-size: 14px; color: var(--soft); line-height: 1.45; }
+    .flow li:last-child { border-right: 0; }
+    .flow b { display: block; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
+    .flow .tag { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--tick); }
+    .flow li.next { background: repeating-linear-gradient(135deg, transparent 0 7px, #f0f2f5 7px 8px); }
+    .flow li.next .tag { color: var(--mute); }
+    .points { margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+    .points h4 { font-size: 15px; margin-bottom: 6px; }
+    .points p { font-size: 15px; color: var(--soft); }
+    .pfoot { margin-top: 26px; display: flex; justify-content: space-between; align-items: baseline; gap: 20px; flex-wrap: wrap; font-size: 14px; color: var(--mute); }
+    .pfoot a { font-weight: 600; font-size: 15px; }
 
-    .ptitle { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
-    .ptitle h3 { font-size: 1.5rem; font-weight: 700; letter-spacing: -.03em; }
-
-    .status {
-      padding: 4px 10px;
-      border: 1px solid currentColor;
-      border-radius: 999px;
-      font: 700 .66rem var(--mono);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    .status.active { color: var(--ok); }
-    .status.paused { color: #f3c969; }
-
-    .psub { grid-column: 1; max-width: 720px; color: var(--soft); font-size: .98rem; }
-
-    .chev {
-      grid-row: 1 / span 2;
-      grid-column: 2;
-      display: grid;
-      width: 40px;
-      height: 40px;
-      place-items: center;
-      border: 1px solid #33466a;
-      border-radius: 50%;
-      color: var(--soft);
-      transition: transform .25s, background .15s;
-    }
-
-    .chev::before { width: 9px; height: 9px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; content: ""; transform: translateY(-2px) rotate(45deg); }
-    .project[open] .chev { transform: rotate(180deg); background: var(--panel-2); }
-
-    .pbody { padding: 0 32px 32px; }
-
-    .flow-label { margin: 8px 0 14px; color: var(--mute); font: 600 .72rem var(--mono); letter-spacing: .12em; text-transform: uppercase; }
-
-    .flow { display: flex; flex-wrap: wrap; gap: 10px 0; }
-
-    .flow li {
-      position: relative;
-      min-width: 150px;
-      flex: 1 1 0;
-      margin-right: 22px;
-      padding: 14px 16px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--panel-2);
-    }
-
-    .flow li:last-child { margin-right: 0; }
-
-    .flow li:not(:last-child)::after {
-      position: absolute;
-      top: 50%;
-      right: -17px;
-      width: 12px;
-      height: 12px;
-      border-top: 2px solid var(--accent);
-      border-right: 2px solid var(--accent);
-      content: "";
-      transform: translateY(-50%) rotate(45deg);
-    }
-
-    .flow b { display: block; font-size: .88rem; font-weight: 650; }
-    .flow span { display: block; margin-top: 4px; color: var(--mute); font-size: .76rem; line-height: 1.4; }
-    .flow li.done { border-color: rgba(94, 234, 212, .45); }
-    .flow li.done b::before { margin-right: 8px; color: var(--ok); content: "BUILT"; font: 700 .6rem var(--mono); letter-spacing: .1em; }
-    .flow li.next { border-style: dashed; opacity: .78; }
-    .flow li.next b::before { margin-right: 8px; color: var(--mute); content: "NEXT"; font: 700 .6rem var(--mono); letter-spacing: .1em; }
-
-    .points { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
-    .points li { padding: 20px; border: 1px solid var(--line); border-radius: 10px; }
-    .points h4 { margin: 0 0 8px; font-size: .94rem; font-weight: 650; }
-    .points p { color: var(--soft); font-size: .86rem; line-height: 1.6; }
-
-    .pfoot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 24px; color: var(--mute); font-size: .8rem; }
-    .pfoot a { color: var(--accent); font-weight: 650; }
-    .pfoot a:hover { text-decoration: underline; }
-
-    /* capabilities */
-    .caps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-
-    .cap-card {
-      display: flex;
-      flex-direction: column;
-      padding: 28px 24px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--panel);
-      transition: border-color .2s, transform .2s;
-    }
-
-    .cap-card:hover { border-color: #2c4170; transform: translateY(-3px); }
-    .cap-card .idx { color: var(--accent); font: 700 .74rem var(--mono); letter-spacing: .12em; }
-    .cap-card h3 { margin: 16px 0 10px; font-size: 1.2rem; font-weight: 700; letter-spacing: -.02em; }
-    .cap-card p { color: var(--soft); font-size: .9rem; line-height: 1.6; }
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 22px; }
-    .chips li { padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel-2); color: var(--soft); font: .74rem var(--mono); }
+    /* capabilities: ledger table */
+    .ledger { border-top: 2px solid var(--ink); }
+    .ledger > div { display: grid; grid-template-columns: 180px minmax(0, 1fr) minmax(0, 1fr); gap: 32px; padding: 22px 0; border-bottom: 1px solid var(--rule); }
+    .ledger h3 { font-size: 1.05rem; }
+    .ledger p { color: var(--soft); font-size: 16px; }
+    .ledger .tools { font-family: var(--mono); font-size: 13.5px; color: var(--ink); line-height: 1.7; }
 
     /* contact */
-    .contact { text-align: left; }
-    .contact h2 { max-width: 760px; font-size: clamp(2.4rem, 5.4vw, 4.4rem); }
-    .contact p { max-width: 560px; margin-top: 22px; color: var(--soft); font-size: 1.1rem; }
+    .contact h2.t { max-width: 26ch; }
+    .contact p.l { margin-top: 14px; color: var(--soft); max-width: 52ch; }
+    footer { border-top: 1px solid var(--rule); padding: 24px 0 40px; font-size: 14px; color: var(--mute); }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
-    footer { padding: 30px 0 40px; color: var(--mute); font-size: .8rem; }
-    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
-
-    /* reveal */
-    .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
-    .js .reveal.in { opacity: 1; transform: none; }
-
-    @media (max-width: 960px) {
-      .hero .wrap { grid-template-columns: 1fr; padding-top: 64px; padding-bottom: 64px; }
-      .caps { grid-template-columns: repeat(2, 1fr); }
-      .points { grid-template-columns: 1fr; }
-      .proof ul { grid-template-columns: repeat(2, 1fr); }
-      .proof li:nth-child(3) { border-left: 0; padding-left: 0; }
-      .proof li:nth-child(n + 3) { border-top: 1px solid var(--line); }
+    @media (max-width: 900px) {
+      .hero .wrap { grid-template-columns: 1fr; gap: 44px; }
+      .flow { grid-template-columns: 1fr; }
+      .flow li { border-right: 0; border-bottom: 1px solid var(--rule); }
+      .flow li:last-child { border-bottom: 0; }
+      .points { grid-template-columns: 1fr; gap: 20px; }
+      .ledger > div { grid-template-columns: 1fr; gap: 8px; }
     }
-
-    @media (max-width: 640px) {
+    @media (max-width: 560px) {
       .wrap { padding: 0 20px; }
-      .links a:not(.cta) { display: none; }
-      .links a.cta { margin-left: 0; }
-      section.block { padding: 72px 0; }
-      .caps { grid-template-columns: 1fr; }
-      .project summary { padding: 22px 20px; }
-      .pbody { padding: 0 20px 24px; }
-      .flow { flex-direction: column; gap: 22px; }
-      .flow li { margin-right: 0; }
-      .flow li:not(:last-child)::after { top: auto; right: auto; bottom: -17px; left: 50%; transform: translateX(-50%) rotate(135deg); }
+      .hero { padding: 44px 0 48px; }
+      section.block { padding: 52px 0; }
+      .nav .links { gap: 18px; }
     }
-
     @media (prefers-reduced-motion: reduce) {
-      :root { scroll-behavior: auto; }
-      *, *::before, *::after { transition: none !important; }
-      .js .reveal { opacity: 1; transform: none; }
+      * { transition: none !important; scroll-behavior: auto !important; }
     }
   </style>
 </head>
 <body>
   <nav class="nav" aria-label="Primary">
     <div class="wrap">
-      <a class="brand" href="#top"><span class="mark" aria-hidden="true">RO</span>Ryan Osborne</a>
+      <a class="brand" href="#top">Ryan Osborne</a>
       <div class="links">
         <a href="#work">Work</a>
-        <a href="#capabilities">Capabilities</a>
-        <a href="#contact" class="cta">Contact</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
       </div>
     </div>
   </nav>
@@ -441,66 +168,61 @@
   <header class="hero" id="top">
     <div class="wrap">
       <div>
-        <p class="kicker">Data engineer</p>
-        <h1>Data pipelines that <em>check their own work.</em></h1>
-        <p class="lede"><strong>Ryan Osborne.</strong> 18+ years across data engineering, governance, and business analysis. I build pipelines, warehouses, and the quality gates that keep reported numbers honest.</p>
+        <h1>I build data pipelines, then prove the numbers tie out.</h1>
+        <p class="lede">I'm Ryan Osborne, a data engineer with 18+ years across engineering, governance, and business analysis. The sheet here replays the weekly run of my Columbus Housing project, with figures from its last check.</p>
         <div class="actions">
-          <a class="btn" href="#work">See the pipelines</a>
+          <a class="btn" href="#work">See the projects</a>
           <a class="btn ghost" href="#contact">Get in touch</a>
         </div>
       </div>
 
-      <aside class="run" aria-label="Weekly job run order from the Columbus Housing project">
-        <div class="run-bar"><b>scripts/weekly.py</b><span>one command, six steps</span></div>
+      <aside class="sheet" id="sheet" aria-label="Weekly run of the Columbus Housing pipeline">
+        <div class="sheet-head"><h2>Weekly run</h2><p>scripts/weekly.py</p></div>
         <ol>
-          <li>Load the county's weekly sales<span>LOAD</span></li>
-          <li>Check the data against 23 rules<span>GATE</span></li>
-          <li>Back up the database<span>SAFE</span></li>
-          <li>Land new rows in Databricks<span>LAND</span></li>
-          <li>Run bronze and silver<span>BUILD</span></li>
-          <li>Reconcile against SQL Server<span>PROVE</span></li>
+          <li class="step"><span class="mark" aria-hidden="true"></span><span>Load the county's weekly sales</span><span class="res">12,718 rows</span></li>
+          <li class="step"><span class="mark" aria-hidden="true"></span><span>Check the data against 23 rules</span><span class="res">pass</span></li>
+          <li class="step"><span class="mark" aria-hidden="true"></span><span>Back up the database</span><span class="res">saved</span></li>
+          <li class="step"><span class="mark" aria-hidden="true"></span><span>Land new rows in Databricks</span><span class="res">landed</span></li>
+          <li class="step"><span class="mark" aria-hidden="true"></span><span>Run bronze and silver</span><span class="res">built</span></li>
+          <li class="step"><span class="mark" aria-hidden="true"></span><span>Reconcile against SQL Server</span><span class="res">tied</span></li>
         </ol>
-        <div class="run-foot">Exits non-zero if any step fails, so a bad week never reaches the lakehouse.</div>
+        <div class="tie">
+          <dl>
+            <div class="row"><dt>Clean sales, SQL Server</dt><dd>12,038</dd></div>
+            <div class="row"><dt>Clean sales, Databricks silver</dt><dd>12,038</dd></div>
+            <div class="row total"><dt>Difference</dt><dd id="diff">0</dd></div>
+          </dl>
+        </div>
+        <div class="sheet-foot"><span>A failed step stops the run before anything lands.</span><button class="rerun" type="button" id="rerun">Run again</button></div>
       </aside>
     </div>
   </header>
 
-  <section class="proof" aria-label="Project metrics">
-    <div class="wrap">
-      <ul>
-        <li><span class="num"><span data-count="12718">12,718</span></span><span class="cap">sales loaded from 59 weekly county reports</span></li>
-        <li><span class="num"><span data-count="49">49</span><small>/50</small></span><span class="cap">parsed reports match the county's own printed count</span></li>
-        <li><span class="num"><span data-count="23">23</span></span><span class="cap">quality rules gate every weekly run</span></li>
-        <li><span class="num"><span data-count="55">55</span></span><span class="cap">automated tests, run in CI against a real SQL Server</span></li>
-      </ul>
-      <p class="stamp">Columbus Housing Pipeline figures, checked Nov 5-6, 2026.</p>
-    </div>
-  </section>
-
   <section class="block" id="work">
     <div class="wrap">
-      <div class="head reveal">
+      <div class="sec-head">
         <div>
-          <p class="eyebrow">Work</p>
-          <h2>Open a project.<br>See the pipeline.</h2>
+          <h2 class="t">Two projects, built in the open.</h2>
+          <p>Open one to see how the data moves and what is built so far.</p>
         </div>
         <button class="tool" type="button" id="toggle-all" aria-pressed="false">Expand all</button>
       </div>
 
-      <details class="project reveal" open>
+      <details class="project" open>
         <summary>
-          <div class="ptitle"><h3>Columbus Housing Pipeline</h3><span class="status paused">Paused</span></div>
-          <p class="psub">Weekly county home-sale reports turned into parcel-level data, verified against the county's own counts. Paused while source data for two more counties is added by hand.</p>
+          <div>
+            <div class="ptitle"><h3>Columbus Housing Pipeline</h3><span class="status paused">Paused</span></div>
+            <p class="psub">Weekly county home-sale reports turned into parcel-level data and checked against the county's own counts. 12,718 sales from 59 reports, 49 of 50 parsed reports matching the printed count, 55 automated tests in CI. Paused while source data for two more counties is added by hand.</p>
+          </div>
           <span class="chev" aria-hidden="true"></span>
         </summary>
         <div class="pbody">
-          <p class="flow-label">Pipeline, source to silver</p>
-          <ol class="flow">
-            <li><b>County report</b><span>Weekly sales page, removed by the county after about 30 weeks</span></li>
-            <li><b>Save and parse</b><span>Every page stored first, then parsed into parcel rows</span></li>
-            <li><b>Quality gate</b><span>23 rules, fail or warn, checked against the printed count</span></li>
-            <li><b>SQL Server</b><span>Keyed on county, parcel, date, and price</span></li>
-            <li><b>Databricks</b><span>Append-only bronze, then silver, reconciled to SQL Server</span></li>
+          <ol class="flow" aria-label="Pipeline, source to silver">
+            <li><b>County report</b>Weekly sales page, removed by the county after about 30 weeks</li>
+            <li><b>Save and parse</b>Every page stored first, then parsed into parcel rows</li>
+            <li><b>Quality gate</b>23 rules, fail or warn, checked against the printed count</li>
+            <li><b>SQL Server</b>Keyed on county, parcel, date, and price</li>
+            <li><b>Databricks</b>Append-only bronze, then silver, reconciled to SQL Server</li>
           </ol>
           <ul class="points">
             <li><h4>Safe re-runs</h4><p>Exports move a high-water mark only after an upload succeeds. Running anything twice adds nothing.</p></li>
@@ -514,20 +236,21 @@
         </div>
       </details>
 
-      <details class="project reveal">
+      <details class="project">
         <summary>
-          <div class="ptitle"><h3>NFL Injury Analyzer</h3><span class="status active">Active</span></div>
-          <p class="psub">A dimensional warehouse of NFL player availability and injuries since 2010, built from nflverse data.</p>
+          <div>
+            <div class="ptitle"><h3>NFL Injury Analyzer</h3><span class="status active">Active</span></div>
+            <p class="psub">A dimensional warehouse of NFL player availability and injuries since 2010, built from nflverse data. Extract and raw load are built and unit-tested; the modeled layers are next.</p>
+          </div>
           <span class="chev" aria-hidden="true"></span>
         </summary>
         <div class="pbody">
-          <p class="flow-label">Pipeline, source to star schema</p>
-          <ol class="flow">
-            <li class="done"><b>Extract</b><span>Rosters, players, games, injuries, with retries and a manifest per file</span></li>
-            <li class="done"><b>Raw load</b><span>Text landing tables with row-count reconciliation per batch</span></li>
-            <li class="next"><b>Staging</b><span>Rules driven by the data profile findings</span></li>
-            <li class="next"><b>Dimensions and facts</b><span>Player-week grain, SCD2 teams, injury episodes</span></li>
-            <li class="next"><b>Serve</b><span>Power BI over the star schema</span></li>
+          <ol class="flow" aria-label="Pipeline, source to star schema">
+            <li class="done"><span class="tag">Built</span><b>Extract</b>Rosters, players, games, injuries, with retries and a manifest per file</li>
+            <li class="done"><span class="tag">Built</span><b>Raw load</b>Text landing tables with row-count reconciliation per batch</li>
+            <li class="next"><span class="tag">Next</span><b>Staging</b>Rules driven by the data profile findings</li>
+            <li class="next"><span class="tag">Next</span><b>Dimensions and facts</b>Player-week grain, SCD2 teams, injury episodes</li>
+            <li class="next"><span class="tag">Next</span><b>Serve</b>Power BI over the star schema</li>
           </ol>
           <ul class="points">
             <li><h4>Inferred is labeled inferred</h4><p>The source has no injury location, so onset venue is inferred and each row records its inference method.</p></li>
@@ -535,7 +258,7 @@
             <li><h4>Profiled before modeled</h4><p>Team codes differ by era and early rosters have duplicate keys. The staging rules come from those findings.</p></li>
           </ul>
           <div class="pfoot">
-            <span>Python, SQL Server, T-SQL. Built and unit-tested: extract and raw load. Next: staging, dimensions, facts.</span>
+            <span>Python, SQL Server, T-SQL. The raw load is unit-tested but not yet run against a live SQL Server.</span>
             <a href="https://github.com/ryanosborne142980-cpu/nfl-injury-analyzer">View the repo</a>
           </div>
         </div>
@@ -543,49 +266,26 @@
     </div>
   </section>
 
-  <section class="block" id="capabilities">
+  <section class="block" id="skills">
     <div class="wrap">
-      <div class="head reveal">
+      <div class="sec-head">
         <div>
-          <p class="eyebrow">Capabilities</p>
-          <h2>What I do,<br>and what I use to do it.</h2>
+          <h2 class="t">What I do, and what I use to do it.</h2>
         </div>
       </div>
-
-      <div class="caps">
-        <article class="cap-card reveal">
-          <span class="idx">01</span>
-          <h3>Build</h3>
-          <p>Ingestion and transformation pipelines, including an on-prem SQL Server to Azure Synapse migration.</p>
-          <ul class="chips"><li>Python</li><li>T-SQL</li><li>Data Factory</li><li>Synapse</li><li>ADLS</li><li>Databricks</li></ul>
-        </article>
-        <article class="cap-card reveal">
-          <span class="idx">02</span>
-          <h3>Prove</h3>
-          <p>Reconciliation, data quality rules, and automated tests, so a number can be traced and defended.</p>
-          <ul class="chips"><li>Reconciliation</li><li>DQ rules</li><li>CI testing</li><li>Idempotent loads</li></ul>
-        </article>
-        <article class="cap-card reveal">
-          <span class="idx">03</span>
-          <h3>Govern</h3>
-          <p>Lineage, data dictionaries, and business glossaries for critical data elements, stewarded with the business.</p>
-          <ul class="chips"><li>Collibra</li><li>Informatica</li><li>IBM Cloud Pak</li><li>Lineage</li></ul>
-        </article>
-        <article class="cap-card reveal">
-          <span class="idx">04</span>
-          <h3>Deliver</h3>
-          <p>Reporting pipelines behind production Power BI, built from requirements gathered with stakeholders.</p>
-          <ul class="chips"><li>Power BI</li><li>Dimensional modeling</li><li>Azure DevOps</li><li>GitHub Actions</li></ul>
-        </article>
+      <div class="ledger">
+        <div><h3>Build</h3><p>Ingestion and transformation pipelines, including an on-prem SQL Server to Azure Synapse migration.</p><p class="tools">Python, T-SQL, Data Factory, Synapse, ADLS, Databricks</p></div>
+        <div><h3>Prove</h3><p>Reconciliation, data quality rules, and automated tests, so a number can be traced and defended.</p><p class="tools">Reconciliation, DQ rules, CI testing, idempotent loads</p></div>
+        <div><h3>Govern</h3><p>Lineage, data dictionaries, and business glossaries for critical data elements, stewarded with the business.</p><p class="tools">Collibra, Informatica, IBM Cloud Pak, lineage</p></div>
+        <div><h3>Deliver</h3><p>Reporting pipelines behind production Power BI, built from requirements gathered with stakeholders.</p><p class="tools">Power BI, dimensional modeling, Azure DevOps, GitHub Actions</p></div>
       </div>
     </div>
   </section>
 
   <section class="block contact" id="contact">
-    <div class="wrap reveal">
-      <p class="eyebrow">Contact</p>
-      <h2>Have data that needs to be trusted? Let's talk.</h2>
-      <p>The fastest way to reach me is LinkedIn. The code behind everything above is on GitHub.</p>
+    <div class="wrap">
+      <h2 class="t">Have data that needs to be trusted?</h2>
+      <p class="l">LinkedIn is the fastest way to reach me. The code behind everything above is on GitHub.</p>
       <div class="actions">
         <a class="btn" href="https://www.linkedin.com/in/ryan-osborne-20306014">Message me on LinkedIn</a>
         <a class="btn ghost" href="https://github.com/ryanosborne142980-cpu">Browse the code on GitHub</a>
@@ -596,15 +296,31 @@
   <footer>
     <div class="wrap">
       <span>Ryan Osborne, data engineer. Columbus, OH.</span>
-      <a href="#top">Back to top</a>
+      <span>Run figures from the Columbus Housing Pipeline, checked Nov 5-6, 2026.</span>
     </div>
   </footer>
 
   <script>
     (function () {
-      var root = document.documentElement;
-      root.classList.add('js');
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // hero run: one orchestrated moment, replayable
+      var sheet = document.getElementById('sheet');
+      var steps = sheet.querySelectorAll('.step');
+      var timers = [];
+      function finish() { steps.forEach(function (s) { s.classList.add('done'); }); sheet.classList.add('ran'); }
+      function run() {
+        timers.forEach(clearTimeout); timers = [];
+        steps.forEach(function (s) { s.classList.remove('done'); });
+        sheet.classList.remove('ran');
+        if (reduce) { finish(); return; }
+        steps.forEach(function (s, i) {
+          timers.push(setTimeout(function () { s.classList.add('done'); }, 350 + i * 420));
+        });
+        timers.push(setTimeout(function () { sheet.classList.add('ran'); }, 350 + steps.length * 420));
+      }
+      document.getElementById('rerun').addEventListener('click', run);
+      run();
 
       // expand / collapse all projects
       var btn = document.getElementById('toggle-all');
@@ -623,42 +339,8 @@
       projects.forEach(function (d) { d.addEventListener('toggle', sync); });
       sync();
 
-      if (!('IntersectionObserver' in window)) {
-        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-        return;
-      }
-
-      // reveal on scroll
-      var revealer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('in'); revealer.unobserve(e.target); }
-        });
-      }, { threshold: 0.12 });
-      document.querySelectorAll('.reveal').forEach(function (el) { revealer.observe(el); });
-
-      // count-up on the proof strip
-      var counters = document.querySelectorAll('[data-count]');
-      var counter = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (!e.isIntersecting) return;
-          counter.unobserve(e.target);
-          var el = e.target, end = parseInt(el.getAttribute('data-count'), 10);
-          if (reduce) return;
-          var start = null, dur = 1100;
-          setTimeout(function () { el.textContent = end.toLocaleString('en-US'); }, dur + 250);
-          function tick(t) {
-            if (start === null) start = t;
-            var p = Math.min((t - start) / dur, 1);
-            var eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = Math.round(end * eased).toLocaleString('en-US');
-            if (p < 1) requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-        });
-      }, { threshold: 0.6 });
-      counters.forEach(function (el) { counter.observe(el); });
-
       // highlight the section in view
+      if (!('IntersectionObserver' in window)) return;
       var links = {};
       document.querySelectorAll('.links a[href^="#"]').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
       var spy = new IntersectionObserver(function (entries) {
@@ -669,7 +351,7 @@
           if (a) a.setAttribute('aria-current', 'true');
         });
       }, { rootMargin: '-45% 0px -50% 0px' });
-      ['work', 'capabilities', 'contact'].forEach(function (id) {
+      ['work', 'skills', 'contact'].forEach(function (id) {
         var s = document.getElementById(id);
         if (s) spy.observe(s);
       });
