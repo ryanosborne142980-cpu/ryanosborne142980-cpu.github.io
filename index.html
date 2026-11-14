@@ -121,6 +121,12 @@
     .file-card p { margin-top: 10px; color: var(--soft); font-size: 15px; }
     .file-path { display: block; margin-top: 16px; color: var(--mute); font-family: var(--mono); font-size: 12px; overflow-wrap: anywhere; }
 
+    /* learning roadmap */
+    .roadmap-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .roadmap-item { padding: 20px; border: 1px solid var(--rule); background: var(--paper); }
+    .roadmap-item h3 { font-size: 1rem; letter-spacing: -.01em; }
+    .roadmap-item p { margin-top: 8px; color: var(--soft); font-size: 14px; }
+
     /* capabilities: ledger table */
     .ledger { border-top: 2px solid var(--ink); }
     .ledger > div { display: grid; grid-template-columns: 180px minmax(0, 1fr) minmax(0, 1fr); gap: 32px; padding: 22px 0; border-bottom: 1px solid var(--rule); }
@@ -140,14 +146,16 @@
       .flow li { border-right: 0; border-bottom: 1px solid var(--rule); }
       .flow li:last-child { border-bottom: 0; }
       .points { grid-template-columns: 1fr; gap: 20px; }
+      .roadmap-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .ledger > div { grid-template-columns: 1fr; gap: 8px; }
     }
     @media (max-width: 560px) {
       .wrap { padding: 0 20px; }
       .hero { padding: 44px 0 48px; }
       section.block { padding: 52px 0; }
-      .nav .links { gap: 18px; }
+      .nav .links { gap: 10px; font-size: 13px; }
       .file-grid { grid-template-columns: 1fr; }
+      .roadmap-grid { grid-template-columns: 1fr; }
     }
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; scroll-behavior: auto !important; }
@@ -161,6 +169,7 @@
       <div class="links">
         <a href="#work">Work</a>
         <a href="#files">Files</a>
+        <a href="#roadmap">Roadmap</a>
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
       </div>
@@ -297,6 +306,75 @@
           <p>Retry-aware downloads with checksums and a manifest for replayable loads.</p>
           <span class="file-path">nfl-injury-analyzer / src/ingestion/extract.py</span>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="roadmap" aria-labelledby="roadmap-heading">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2 class="t" id="roadmap-heading">Planned learning projects</h2>
+          <p>Future work across the data engineering lifecycle. These are planned demonstrations, not completed projects.</p>
+        </div>
+      </div>
+      <div class="roadmap-grid">
+        <article class="roadmap-item">
+          <h3>Batch and API ingestion</h3>
+          <p>Checkpointed loads with pagination, retries, schema checks, and safe reruns.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Streaming and event processing</h3>
+          <p>Event-time windows, duplicate handling, late events, and dead-letter recovery.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Workflow orchestration</h3>
+          <p>Dependency-aware schedules, retries, backfills, and service-level expectations.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Lakehouse storage</h3>
+          <p>Raw, standardized, and curated layers with documented retention and replay.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Incremental transformations</h3>
+          <p>SQL transformations with change capture and reproducible backfills.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Warehouse modeling</h3>
+          <p>Dimensional models, slowly changing dimensions, and tested fact-table grain.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Data contracts and quality</h3>
+          <p>Schema and business rules, source reconciliation, and quarantined failures.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Observability and reliability</h3>
+          <p>Freshness, volume, latency, and failure signals connected to actionable runbooks.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Governance and lineage</h3>
+          <p>Catalog, ownership, definitions, lineage, and data classification.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Security and privacy</h3>
+          <p>Role-based access, secret handling, masking, and auditable access changes.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Serving and analytics</h3>
+          <p>A stable semantic layer and tested interfaces for BI and downstream consumers.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Performance and cost</h3>
+          <p>Query profiling, partition strategies, file layout, and usage-based cost checks.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Platform and delivery</h3>
+          <p>Automated testing and promotion across environments with infrastructure as code.</p>
+        </article>
+        <article class="roadmap-item">
+          <h3>Data migration and cutover</h3>
+          <p>Schema mapping, parallel validation, incremental sync, and a tested rollback plan.</p>
+        </article>
       </div>
     </div>
   </section>
