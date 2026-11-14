@@ -18,8 +18,6 @@
       --rule-strong: #11151c;
       --tick: #0a7c4f;
       --tick-bg: #e6f4ed;
-      --hold: #8a5300;
-      --hold-bg: #fbf0dc;
       --link: #1d4ed8;
       --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
       font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -100,9 +98,6 @@
     .project summary::-webkit-details-marker { display: none; }
     .ptitle { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
     .ptitle h3 { font-size: 1.35rem; letter-spacing: -.015em; }
-    .status { font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 99px; }
-    .status.active { color: var(--tick); background: var(--tick-bg); }
-    .status.paused { color: var(--hold); background: var(--hold-bg); }
     .psub { margin-top: 8px; color: var(--soft); max-width: 64ch; }
     .chev { align-self: start; margin-top: 6px; width: 12px; height: 12px; border: solid var(--ink); border-width: 0 2px 2px 0; transform: rotate(45deg); transition: transform .25s; justify-self: center; }
     .project[open] .chev { transform: rotate(225deg); }
@@ -112,9 +107,6 @@
     .flow li { padding: 14px 14px 16px; border-right: 1px solid var(--rule); font-size: 14px; color: var(--soft); line-height: 1.45; }
     .flow li:last-child { border-right: 0; }
     .flow b { display: block; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
-    .flow .tag { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--tick); }
-    .flow li.next { background: repeating-linear-gradient(135deg, transparent 0 7px, #f0f2f5 7px 8px); }
-    .flow li.next .tag { color: var(--mute); }
     .points { margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
     .points h4 { font-size: 15px; margin-bottom: 6px; }
     .points p { font-size: 15px; color: var(--soft); }
@@ -211,7 +203,7 @@
       <details class="project" open>
         <summary>
           <div>
-            <div class="ptitle"><h3>Columbus Housing Pipeline</h3><span class="status paused">Paused</span></div>
+            <div class="ptitle"><h3>Columbus Housing Pipeline</h3></div>
             <p class="psub">Weekly county home-sale reports turned into parcel-level data and checked against the county's own counts. 12,718 sales from 59 reports, 49 of 50 parsed reports matching the printed count, 55 automated tests in CI. Paused while source data for two more counties is added by hand.</p>
           </div>
           <span class="chev" aria-hidden="true"></span>
@@ -239,18 +231,18 @@
       <details class="project">
         <summary>
           <div>
-            <div class="ptitle"><h3>NFL Injury Analyzer</h3><span class="status active">Active</span></div>
+            <div class="ptitle"><h3>NFL Injury Analyzer</h3></div>
             <p class="psub">A dimensional warehouse of NFL player availability and injuries since 2010, built from nflverse data. Extract and raw load are built and unit-tested; the modeled layers are next.</p>
           </div>
           <span class="chev" aria-hidden="true"></span>
         </summary>
         <div class="pbody">
           <ol class="flow" aria-label="Pipeline, source to star schema">
-            <li class="done"><span class="tag">Built</span><b>Extract</b>Rosters, players, games, injuries, with retries and a manifest per file</li>
-            <li class="done"><span class="tag">Built</span><b>Raw load</b>Text landing tables with row-count reconciliation per batch</li>
-            <li class="next"><span class="tag">Next</span><b>Staging</b>Rules driven by the data profile findings</li>
-            <li class="next"><span class="tag">Next</span><b>Dimensions and facts</b>Player-week grain, SCD2 teams, injury episodes</li>
-            <li class="next"><span class="tag">Next</span><b>Serve</b>Power BI over the star schema</li>
+            <li><b>Extract</b>Rosters, players, games, injuries, with retries and a manifest per file</li>
+            <li><b>Raw load</b>Text landing tables with row-count reconciliation per batch</li>
+            <li><b>Staging</b>Rules driven by the data profile findings</li>
+            <li><b>Dimensions and facts</b>Player-week grain, SCD2 teams, injury episodes</li>
+            <li><b>Serve</b>Power BI over the star schema</li>
           </ol>
           <ul class="points">
             <li><h4>Inferred is labeled inferred</h4><p>The source has no injury location, so onset venue is inferred and each row records its inference method.</p></li>
